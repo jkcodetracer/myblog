@@ -32,11 +32,17 @@ class Article(models.Model):
 
     author = models.ForeignKey(User)
 
+    view_count = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk':self.pk})
+
+    def increase_views(self):
+        self.view_count += 1
+        self.save(update_fields = ['view_count'])
 
     class Meta:
         # do not need to order everytime

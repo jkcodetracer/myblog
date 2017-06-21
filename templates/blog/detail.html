@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_tags%}
 {% block main %}
 <article class="post post-{{article.pk}}">
   <header class="entry-header">
@@ -10,7 +11,7 @@
                 datetime="{{article.create_time}}">{{article.create_time}}</time></a></span>
       <span class="post-author"><a href="#">{{article.author}}</a></span>
       <span class="comments-link"><a href="#commit_section">{{comment_list.count}} comment</a></span>
-      <span class="views-count"><a href="#">588 阅读</a></span>
+      <span class="views-count"><a href="#">{{article.view_count}} read</a></span>
     </div>
   </header>
   <div class="entry-content clearfix">
@@ -69,42 +70,32 @@
     <h3 class="widget-title">Article Index</h3>
     {{toc | safe}}
 </div>
+<div class="widget widget-tag-cloud">
+    <h3 class="widget-title">Tags</h3>
+    <ul>
+        {% for tag in article.tags.all%}
+            <li>
+            {{tag.name}}
+            </li>
+        {%empty%}
+            No Tags
+        {% endfor%}
+    </ul>
+</div>
 
-                <div class="widget widget-tag-cloud">
-                    <h3 class="widget-title">标签云</h3>
-                    <ul>
-                        <li>
-                            <a href="#">Django</a>
-                        </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
-                    </ul>
-                </div>
+<div class="widget widget-tag-cloud">
+    <h3 class="widget-title">Tags Cloud</h3>
+    {% get_tags as tag_list%}
+    <ul>
+        {% for tag in tag_list%}
+            <li>
+                <a href="{% url 'blog:tag_view' tag.pk %}"> {{tag.name}}</a>
+            </li>
+        {% empty%}
+            No Tag Cloud
+        {% endfor%}
+    </ul>
+</div>
                 <div class="rss">
                     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>

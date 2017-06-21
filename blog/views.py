@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Article, Category
+from .models import Article, Category, Tag
 
 from comments.forms import CommentForm
 
@@ -32,6 +32,16 @@ def index(request):
     return render(request, 'blog/index.html', context = {
         'article_list' : articles
         })
+
+# show articles belongs to a tag
+class TagView(ListView):
+    model = Article
+    template_name = 'blog/index.html'
+    context_object_name = 'article_list'
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        return super().get_queryset().filter(tags = tag)
 
 # a better pagination
 class IndexView(ListView):
@@ -98,6 +108,7 @@ class IndexView(ListView):
 
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    article.increase_views()
     # to create an instance of markdown
     md = markdown.Markdown(extensions=[
                                          'markdown.extensions.extra',

@@ -1,5 +1,5 @@
 from ..models import Category
-from ..models import Article
+from ..models import Article,Tag
 # register the function as a static tag,
 # django can use these tags to render the html
 from django import template
@@ -23,4 +23,8 @@ def get_categories():
     category_list = Category.objects.annotate(num_articles = Count('article'))
     #return Category.objects.all()
     return category_list
+
+@register.simple_tag
+def get_tags():
+    return Tag.objects.annotate(num_articles=Count('article')).filter(num_articles__gt=0)
 
