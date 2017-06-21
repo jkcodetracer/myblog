@@ -9,9 +9,23 @@ import markdown
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 
+# pagination
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 def index(request):
-    articles = Article.objects.all().order_by('-create_time')
+    articles = Article.objects.all()
+    # '5' articles per page
+    paginator = Paginator(articles, 5)
+    page = request.GET.get('page')
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
     return render(request, 'blog/index.html', context = {
         'article_list' : articles
         })
