@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Article, Category
 
+from comments.forms import CommentForm
+
 # support markdown
 import markdown
 
@@ -20,7 +22,13 @@ def detail(request, pk):
                                          'markdown.extensions.codehilite',
                                          'markdown.extensions.toc',
                                      ])
-    return render(request, 'blog/detail.html', context={'post':article})
+    form = CommentForm()
+    comment_list = article.comments_set.all()
+
+    context = {'article':article,
+               'form':form,
+               'comment_list':comment_list}
+    return render(request, 'blog/detail.html', context=context)
 
 def archives(request, year, month):
     article_list = Article.objects.filter(create_time__year = year,
