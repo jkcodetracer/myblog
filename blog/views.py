@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Article
+from .models import Article, Category
 
 # support markdown
 import markdown
@@ -25,5 +25,10 @@ def detail(request, pk):
 def archives(request, year, month):
     article_list = Article.objects.filter(create_time__year = year,
                                           create_time__month = month).order_by('-create_time')
-    return render(request, 'blog/index.html', {'article_list':article_list})
+    return render(request, 'blog/index.html', context={'article_list':article_list})
+
+def categories(request, pk):
+    cate = get_object_or_404(Category, pk=pk)
+    article_list = Article.objects.filter(category=cate).order_by('-create_time')
+    return render(request, 'blog/index.html', context={'article_list':article_list})
 

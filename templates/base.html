@@ -108,7 +108,7 @@
                     <ul>
                         {% for cate in cate_list %}
                             <li>
-                                <a href="#"> {{ cate.name }} 
+                                <a href="{% url 'blog:archive_cate' cate.pk %}"> {{ cate.name }} 
                                     <span class="post-count">
                                         (15)
                                     </span>
