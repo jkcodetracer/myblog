@@ -10,3 +10,7 @@ def index(request):
         'article_list' : articles
         })
 
+def detail(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    return render(request, 'blog/detail.html', context={'post':article})
+
