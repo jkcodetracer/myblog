@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 # to fetch the absolute url
 from django.urls import reverse
 
+import markdown
+from django.utils.html import strip_tags
+
 
 # Create your models here.
 class Category(models.Model):
@@ -43,6 +46,16 @@ class Article(models.Model):
     def increase_views(self):
         self.view_count += 1
         self.save(update_fields = ['view_count'])
+
+    # auto create summary
+    def save(self, *args, **kwargs):
+        if not self.summary:
+            md = markdown.Markdown(extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+            ])
+            self.summary = strip_tags(md.convert(self.body))[:54]
+        super().save(*args, **kwargs)
 
     class Meta:
         # do not need to order everytime
