@@ -6,6 +6,8 @@ from comments.forms import CommentForm
 
 # support markdown
 import markdown
+from django.utils.text import slugify
+from markdown.extensions.toc import TocExtension
 
 # Create your views here.
 def index(request):
@@ -16,18 +18,20 @@ def index(request):
 
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
-    article.body = markdown.markdown(article.body,
-                                     extensions=[
+    # to create an instance of markdown
+    md = markdown.Markdown(extensions=[
                                          'markdown.extensions.extra',
                                          'markdown.extensions.codehilite',
-                                         'markdown.extensions.toc',
+                                        TocExtension(slugify = slugify),
                                      ])
+    article.body = md.convert(article.body)
     form = CommentForm()
     comment_list = article.comments_set.all()
 
     context = {'article':article,
                'form':form,
-               'comment_list':comment_list}
+               'comment_list':comment_list,
+               'toc': md.toc}
     return render(request, 'blog/detail.html', context=context)
 
 def archives(request, year, month):
