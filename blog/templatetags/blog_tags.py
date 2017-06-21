@@ -4,6 +4,8 @@ from ..models import Article
 # django can use these tags to render the html
 from django import template
 
+from django.db.models.aggregates import Count
+
 register = template.Library()
 
 # after doing this, the function 'get_recent_posts' can be used in html
@@ -18,5 +20,7 @@ def archives():
 
 @register.simple_tag
 def get_categories():
-    return Category.objects.all()
+    category_list = Category.objects.annotate(num_articles = Count('article'))
+    #return Category.objects.all()
+    return category_list
 
