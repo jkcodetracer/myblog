@@ -15,6 +15,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # use ListView to do paginate
 from django.views.generic.list import ListView
 
+# to combine different query sentences
+from django.db.models import Q
+
 # Create your views here.
 def index(request):
     articles = Article.objects.all()
@@ -143,7 +146,7 @@ def search(request):
         error_msg = 'Please input keyword'
         return render(request, 'blog/index.xml', {'error_msg':error_msg})
 
-    article_list = Article.objects.filter(title__icontains=q)
+    article_list = Article.objects.filter(Q(title__icontains=q)|Q(body__icontains=q))
     return render(request, 'blog/index.html', context={'error_msg': error_msg,
                                                'article_list':article_list})
 
