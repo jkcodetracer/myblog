@@ -12,6 +12,9 @@ from markdown.extensions.toc import TocExtension
 # pagination
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# use ListView to do paginate
+from django.views.generic.list import ListView
+
 # Create your views here.
 def index(request):
     articles = Article.objects.all()
@@ -29,6 +32,13 @@ def index(request):
     return render(request, 'blog/index.html', context = {
         'article_list' : articles
         })
+
+# a better pagination
+class IndexView(ListView):
+    model = Article
+    template_name = 'blog/index.html'
+    context_object_name = 'article_list'
+    paginate_by = 5
 
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
