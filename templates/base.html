@@ -95,7 +95,7 @@
                     <ul>
                         {% for date in archive_list%}
                             <li>
-                                <a href="#"> {{date.month}}/{{date.year}} </a>
+                                <a href="{% url 'blog:archives' date.year date.month %}"> {{date.month}}/{{date.year}} </a>
                             </li>
                         {% empty %}
                             No Archives

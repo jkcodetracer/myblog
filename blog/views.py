@@ -22,3 +22,8 @@ def detail(request, pk):
                                      ])
     return render(request, 'blog/detail.html', context={'post':article})
 
+def archives(request, year, month):
+    article_list = Article.objects.filter(create_time__year = year,
+                                          create_time__month = month).order_by('-create_time')
+    return render(request, 'blog/index.html', {'article_list':article_list})
+
