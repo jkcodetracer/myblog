@@ -40,3 +40,16 @@ def categories(request, pk):
     article_list = Article.objects.filter(category=cate).order_by('-create_time')
     return render(request, 'blog/index.html', context={'article_list':article_list})
 
+def search(request):
+    q = request.GET.get('q')
+    error_msg = ''
+
+    if not q:
+        error_msg = 'Please input keyword'
+        return render(request, 'blog/index.xml', {'error_msg':error_msg})
+
+    article_list = Article.objects.filter(title__icontains=q)
+    return render(request, 'blog/index.html', context={'error_msg': error_msg,
+                                               'article_list':article_list})
+
+
