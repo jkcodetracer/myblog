@@ -22,7 +22,7 @@ from django.db.models import Q
 def index(request):
     articles = Article.objects.all()
     # '5' articles per page
-    paginator = Paginator(articles, 5)
+    paginator = Paginator(articles, 2)
     page = request.GET.get('page')
 
     try:
@@ -150,4 +150,14 @@ def search(request):
     return render(request, 'blog/index.html', context={'error_msg': error_msg,
                                                'article_list':article_list})
 
+def test(request):
+    return render(request, 'test.html')
 
+def tagmain(request):
+    return render(request, 'blog/tags.html')
+
+def about(request):
+    return render(request, 'blog/about.html')
+
+def portfolio(request):
+    return render(request, 'blog/portfolio.html')

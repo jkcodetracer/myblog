@@ -26,13 +26,11 @@
         <div class="read-more cl-effect-14">
             <a href="{{post.get_absolute_url}}" class="more-link">
                 Continue
-                <!-- <span class="meta-nav">></span> -->
+                <span class="meta-nav">></span>
             </a>
         </div>
     </div>
-    <div>
-        <hr>
-    </div>
+    <div> <hr> </div>
 </article>
 {% empty %}
 <div class="no-article">
@@ -40,38 +38,38 @@
 </div>
 {% endfor %}
 
-<div class="container-fluid">
-    <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            {% if article_list.has_previous %}
-            <li>
-                <div class="read-more cl-effect-14">
-                    <a href="?page={{article_list.previous_page_number}}">
-                        PREVIOUS
-                    </a>
-                </div>
-            </li>
-            {% endif %}
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            {% if article_list.has_next %}
-            <li>
-                <div class="read-more cl-effect-14">
-                    <a href="?page={{article_list.next_page_number}}">
-                        NEXT
-                    </a>
-                </div>
-            </li>
-            {% endif %}
-        </ul>
-    </div><!--/.container-fluid -->
+{% if is_paginated %}
+<div class="pagination">
+    {% if first %}
+    <a href="?page=1">1</a>
+    {% endif %}
+    {% if left%}
+    {% if left_has_more %}
+    <span>...</span>
+    {% endif %}
+    {% for i in left %}
+    <a href="?page={{i}}">{{i}}</a>
+    {% endfor %}
+    {% endif %}
+    <span class="current">
+        <a href="?page={{page_obj.number}}" style="color:red">{{page_obj.number}}</a>
+    </span>
+    {% if right%}
+    {% for i in right%}
+    <a href="?page={{i}}">{{i}}</a>
+    {% endfor%}
+    {% if right_has_more %}
+    <span>...</span>
+    {% endif%}
+    {% endif%}
+    {% if last %}
+    <a href="?page={{paginator.num_pages}}"> {{paginator.num_pages}}</a>
+    {% endif%}
 </div>
-
+{% endif %}
 {% endblock main %}
 {% block aside %}
-<div>
-    <hr>
-</div>
+<div> <hr> </div>
 <div class="widget widget-recent-posts">
     <h3 class="widget-title">New Articles</h3>
     {% get_recent_posts as recent_post_list %}
@@ -87,9 +85,7 @@
         {% endfor %}
     </ul>
 </div>
-<div>
-    <hr>
-</div>
+<div> <hr> </div>
 <div class="widget widget-archives">
     <h3 class="widget-title">Archives</h3>
     {% archives as archive_list %}
@@ -103,9 +99,7 @@
         {% endfor%}
     </ul>
 </div>
-<div>
-    <hr>
-</div>
+<div> <hr> </div>
 <div class="widget widget-category">
     <h3 class="widget-tiltle">Categories</h3>
     {% get_categories as cate_list %}

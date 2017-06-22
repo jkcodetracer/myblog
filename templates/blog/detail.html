@@ -2,21 +2,37 @@
 {% load blog_tags%}
 {% block main %}
 <article class="post post-{{article.pk}}">
-  <header class="entry-header">
-    <h1 class="entry-title">{{article.title}}</h1>
-    <div class="entry-meta">
-      <span class="post-category"><a href="#">{{article.category.name}}</a></span>
-      <span class="post-date"><a href="#">
+    <header class="entry-header">
+        <div class="col-lg-1">
+            <div class="widget widget-tag-cloud">
+                <ul>
+                    {% for tag in article.tags.all%}
+                    <li>
+                        <a href="{% url 'blog:tag_view' tag.pk %}"> {{tag.name}}</a>
+                    </li>
+                    {%empty%}
+                    No Tags
+                    {% endfor%}
+                </ul>
+            </div>
+            <h1 class="entry-title">{{article.title}}</h1>
+            <div class="entry-meta">
+                <span class="post-category"><a href="#">{{article.category.name}} </a> </span>
+                <span class="post-date"><a href="#">
           <time class="entry-date"
-                datetime="{{article.create_time}}">{{article.create_time}}</time></a></span>
-      <span class="post-author"><a href="#">{{article.author}}</a></span>
-      <span class="comments-link"><a href="#commit_section">{{comment_list.count}} comment</a></span>
-      <span class="views-count"><a href="#">{{article.view_count}} read</a></span>
+                datetime="{{article.create_time}}">Time: {{article.create_time}}</time> </a></span>
+                <span class="post-author"><a href="#"> Post By {{article.author}} </a> </span>
+                <!--
+              <span class="comments-link"><a href="#commit_section">{{comment_list.count}} comment </a> </span>
+              <span class="views-count"><a href="#">{{article.view_count}} read </a></span>
+              -->
+            </div>
+        </div>
+    </header>
+    <hr>
+    <div class="entry-content clearfix">
+        {{article.body | safe}}
     </div>
-  </header>
-  <div class="entry-content clearfix">
-    {{article.body | safe}}
-  </div>
 </article>
 <section class="comment-area" id="comment-area">
     <hr>
@@ -47,7 +63,7 @@
             </div>
         </div>    <!-- row -->
     </form>
-    <div class="comment-list-panel" id = "commit_section">
+    <div class="comment-list-panel" id="commit_section">
         <h4>Comment list, <span>{{comment_list.count}}</span> total </h4>
         <ul class="comment-list list-unstyled">
             {% for comment in comment_list %}
@@ -59,44 +75,23 @@
                 </div>
             </li>
             {% empty%}
-                No Comments
-            {% endfor%} 
+            No Comments
+            {% endfor%}
         </ul>
     </div>
 </section>
 {% endblock main %}
 {% block toc %}
+<hr>
 <div class="widget widget-content">
-    <h3 class="widget-title">Article Index</h3>
+    <h3 class="widget-title">CATALOG </h3>
     {{toc | safe}}
 </div>
-<div class="widget widget-tag-cloud">
-    <h3 class="widget-title">Tags</h3>
-    <ul>
-        {% for tag in article.tags.all%}
-            <li>
-            {{tag.name}}
-            </li>
-        {%empty%}
-            No Tags
-        {% endfor%}
-    </ul>
-</div>
 
-<div class="widget widget-tag-cloud">
-    <h3 class="widget-title">Tags Cloud</h3>
-    {% get_tags as tag_list%}
-    <ul>
-        {% for tag in tag_list%}
-            <li>
-                <a href="{% url 'blog:tag_view' tag.pk %}"> {{tag.name}}</a>
-            </li>
-        {% empty%}
-            No Tag Cloud
-        {% endfor%}
-    </ul>
+
+<!--
+<div class="rss">
+     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
 </div>
-                <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
-                </div>
+-->
 {% endblock toc %}

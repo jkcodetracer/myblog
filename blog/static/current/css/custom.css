@@ -39,6 +39,7 @@ h4,
 h5,
 h6 {
     margin-top: 0;
+    font-weight:bold;
 }
 
 b {
@@ -142,24 +143,21 @@ img {
  */
 
 .main-nav {
-    margin-top: 11px;
-    max-width: 95%;
 }
 
 .main-nav a {
     color: #000000 !important;
-    padding: 0 0 5px 0 !important;
     margin-right: 30px;
     font-family: 'Lato', sans-serif;
-    font-weight: 300;
+    font-weight: 200;
     font-size: 24px;
 }
 
 .main-nav a:active,
 .main-nav a:focus,
 .main-nav a:hover {
-    background-color: transparent !important;
-    border-bottom: 0;
+    background-color: #00BFFF !important;
+    color:#FFFFFF !;
 }
 
 .navbar-toggle {
@@ -179,17 +177,13 @@ img {
  */
 
 .cl-effect-11 a {
-    padding: 10px 0;
     color: #0972b4;
     text-shadow: none;
 }
 
 .cl-effect-11 a::before {
     position: absolute;
-    top: 0;
-    left: 0;
     overflow: hidden;
-    padding: 0 0 5px 0 !important;
     max-width: 0;
     border-bottom: 1px solid #000;
     color: #000;
@@ -220,7 +214,7 @@ img {
 
 .entry-title {
     text-align: center;
-    font-size: 1.9em;
+    font-size: 3.0em;
     margin-bottom: 20px;
     line-height: 1.6;
     padding: 10px 20px 0;
@@ -245,7 +239,7 @@ img {
 .post-author::after,
 .comments-link::after {
     content: ' ·';
-    color: #000;
+    color: #F4A460;
 }
 
 /**
@@ -337,14 +331,14 @@ img {
 
 .widget {
     background: #fff;
-    padding: 30px 0 0;
+    padding: 5px 0 0;
 }
 
 .widget-title {
     font-size: 1.5em;
     margin-bottom: 20px;
     line-height: 1.6;
-    padding: 10px 0 0;
+    padding: 5px 0 0;
     font-weight: 400;
 }
 
@@ -413,7 +407,7 @@ img {
     position: absolute;
     left: -25px;
     top: 1px;
-    font-size: 18px;
+    font-size: 16px;
     color: #000;
 }
 
@@ -434,11 +428,11 @@ img {
 }
 
 .widget-content ul ul {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .widget-content ul li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .rss {
@@ -474,7 +468,6 @@ img {
 #header-search-box {
     position: absolute;
     right: 38px;
-    top: 8px;
 }
 
 .search-form {
@@ -483,7 +476,6 @@ img {
     position: absolute;
     min-width: 200px;
     right: -6px;
-    top: 33px;
 }
 
 #search-menu span {

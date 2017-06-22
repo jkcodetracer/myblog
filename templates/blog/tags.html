@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'base.html'%}
+{% load blog_tags%}
+{% block main%}
+<div class="widget widget-tag-cloud">
+    <h3 class="widget-title">Tag Cloud</h3>
+    {% get_tags as tag_list%}
+    <ul>
+        {% for tag in tag_list%}
+        <li>
+            <a href="{% url 'blog:tag_view' tag.pk %}"> {{tag.name}}</a>
+        </li>
+        {% empty%}
+        No Tag Cloud
+        {% endfor%}
+    </ul>
+</div>
+{% endblock main%}
+
