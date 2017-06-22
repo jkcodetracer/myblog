@@ -11,6 +11,6 @@ This is a personal blog using Django
 - pagitation
 - markdown
 
-# 2 furthure plan
+# 2 further plan
 - put personal program on it
 - put private tutorials on it
